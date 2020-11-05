@@ -1,0 +1,66 @@
+Entity List
+
+Asset Class
+	ID				AutoField
+	Name			CharField
+	Notes			TextField
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField
+Symbol Type
+	ID				AutoField
+	Name			CharField	
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField
+Investment
+	ID				AutoField
+	Name			CharField
+	Symbol			CharField
+	Symbol Type		IntegerField
+	Asset Class		IntegerField
+	Notes			TextField
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField
+Investment Price
+	ID				AutoField
+	Investment		IntegerField
+	Price			DecimalField
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField
+Account Type
+	ID				AutoField
+	Name			CharField
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField
+Portfolio
+	ID				AutoField
+	Name			CharField
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField	
+Account
+	ID				AutoField
+	Name			CharField
+	Account Number	CharField
+	Account Type	IntegerField
+	Initial Balance DecimalField
+	Notes			TextField
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField
+Account Transaction
+	ID				AutoField
+	Tran ID			IntegerField
+	Tran Date		DateField
+	Tran Type		CharField
+	Action			CharField
+	Investment		IntegerField
+	Payee			CharField
+	Dividend		IntegerField
+	Quantity		DecimalField
+	Price			DecimalField
+	Fee				DecimalField
+	Category		CharField
+	Withdrawal		DecimalField
+	Deposit			DecimalField
+	Notes			TextField
+	Created Date	DateTimeField
+	Updated Date 	DateTimeField
+
