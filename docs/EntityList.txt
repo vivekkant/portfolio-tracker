@@ -1,14 +1,15 @@
 Entity List
 
-Asset Class
+Asset Class (Enum)
 	ID				AutoField
 	Name			CharField
 	Notes			TextField
 	Created Date	DateTimeField
 	Updated Date 	DateTimeField
-Symbol Type
+Symbol Type (Enum)
 	ID				AutoField
 	Name			CharField	
+	Notes			TextField
 	Created Date	DateTimeField
 	Updated Date 	DateTimeField
 Investment
@@ -24,10 +25,12 @@ Investment Price
 	ID				AutoField
 	Investment		IntegerField
 	Price			DecimalField
+	Price Date 		DateTimeField
 	Created Date	DateTimeField
 	Updated Date 	DateTimeField
-Account Type
+Account Type (Enum)
 	ID				AutoField
+	Code			IntegerField
 	Name			CharField
 	Created Date	DateTimeField
 	Updated Date 	DateTimeField
@@ -45,12 +48,16 @@ Account
 	Notes			TextField
 	Created Date	DateTimeField
 	Updated Date 	DateTimeField
-Account Transaction
+Transaction
 	ID				AutoField
-	Tran ID			IntegerField
+	Tran ID			CharField
 	Tran Date		DateField
 	Tran Type		CharField
+	Reference No 	CharField
+	Account			IntegerField
+	Counter Account	IntegerField
 	Action			CharField
+	Transfer		BooleanField
 	Investment		IntegerField
 	Payee			CharField
 	Dividend		IntegerField
@@ -58,9 +65,21 @@ Account Transaction
 	Price			DecimalField
 	Fee				DecimalField
 	Category		CharField
-	Withdrawal		DecimalField
-	Deposit			DecimalField
+	Debit			DecimalField
+	Credit			DecimalField
+	Portfolio 		IntegerField
 	Notes			TextField
 	Created Date	DateTimeField
 	Updated Date 	DateTimeField
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'portfolio',
+        'USER': 'portfolio_user',
+        'PASSWORD': 'passw0rd',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}

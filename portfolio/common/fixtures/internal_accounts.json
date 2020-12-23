@@ -1,0 +1,28 @@
+[
+  {
+    "model": "common.Account",
+    "pk": 1,
+    "fields": {
+      "name": "CASHBOOK",
+      "account_number": -1,
+      "account_type": "_INTERNAL",
+      "intial_balance": 0.0,
+      "notes": "Internal Account for Cash Book",
+      "created_date": "2020-12-21 11:01:51",
+      "updated_date": "2020-12-21 11:01:51"
+    }
+  },
+  {
+    "model": "common.Account",
+    "pk": 2,
+    "fields": {
+      "name": "ASSETBOOK",
+      "account_number": -1,
+      "account_type": "_INTERNAL",
+      "intial_balance": 0.0,
+      "notes": "Internal Account for Asset Book",
+      "created_date": "2020-12-21 11:01:51",
+      "updated_date": "2020-12-21 11:01:51"
+    }
+  }
+]
