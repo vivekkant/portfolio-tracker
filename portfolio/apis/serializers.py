@@ -3,6 +3,8 @@ from common.models import Portfolio
 from common.models import Investment
 from common.models import InvestmentPrice
 from common.models import Account
+from common.models import Transaction
+from common.models import TransactionType
 
 
 class PortfolioSerializer(serializers.ModelSerializer):
@@ -32,4 +34,25 @@ class AccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = ['id', 'name', 'account_number', 'account_type', 'intial_balance', 'closed', 'notes', 'created_date', 'updated_date',
         ]
+
+class TransactionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Transaction
+        fields = ['id', 'transaction_id', 'transaction_date', 'transaction_type', 'reference_no', 
+                  'account', 'counter_account' , 'investment', 'price', 'quantity',
+                  'fee', 'debit', 'credit', 'notes', 'created_date', 'updated_date',
+        ]
+"""
+    def create(self, validated_data):
+        return Transaction(**validated_data)
+
+    def update(self, instance, validated_data):
+        # TODO Update Instance
+        return instance
+"""
+
+
+
+
 
