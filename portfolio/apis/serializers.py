@@ -4,8 +4,6 @@ from common.models import Investment
 from common.models import InvestmentPrice
 from common.models import Account
 from common.models import Transaction
-from common.models import TransactionType
-
 
 class PortfolioSerializer(serializers.ModelSerializer):
 
@@ -43,14 +41,7 @@ class TransactionSerializer(serializers.ModelSerializer):
                   'account', 'counter_account' , 'investment', 'price', 'quantity',
                   'fee', 'debit', 'credit', 'notes', 'created_date', 'updated_date',
         ]
-"""
-    def create(self, validated_data):
-        return Transaction(**validated_data)
 
-    def update(self, instance, validated_data):
-        # TODO Update Instance
-        return instance
-"""
 
 
 

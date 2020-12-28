@@ -5,10 +5,12 @@ from common.models import Portfolio
 from common.models import Investment
 from common.models import Account
 from common.models import InvestmentPrice
+from common.models import Transaction
 from apis.serializers import PortfolioSerializer
 from apis.serializers import InvestmentSerializer
 from apis.serializers import InvestmentPriceSerializers
 from apis.serializers import AccountSerializer
+from apis.serializers import TransactionSerializer
 
 # Create your views here.
 class PortfolioViewSet(viewsets.ModelViewSet):
@@ -42,5 +44,40 @@ class AccountViewSet(viewsets.ModelViewSet):
     """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`, update` and `destroy` actions.
+    """
+
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        queryset = Transaction.objects.filter(account=self.kwargs['accounts_pk'])
+        return queryset
+
+    def list(self, request, accounts_pk=None):
+        queryset = Transaction.objects.filter(account=self.kwargs['accounts_pk'])
+        serializer = TransactionSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, accounts_pk=None, pk=None):
+        queryset = Transaction.objects.get(pk=pk)
+        serializer = TransactionSerializer(queryset)
+        return Response(serializer.data)
+
+    def create(self, request, accounts_pk=None):
+        return Response({'created': 'true'})
+
+    def update(self, request, pk=None, accounts_pk=None):
+        return Response(request.data)
+
+    def destroy(self, request, pk=None, accounts_pk=None):
+        return Response({'destroyed': 'true'})
+
+
+
+
+
 
     

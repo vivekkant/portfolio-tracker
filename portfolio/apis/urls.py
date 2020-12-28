@@ -12,7 +12,11 @@ router.register(r'accounts', views.AccountViewSet)
 investments_router = routers.NestedSimpleRouter(router, r'investments', lookup='investments')
 investments_router.register(r'prices', views.InvestmentPriceViewSet, basename='investments-prices')
 
+accounts_router = routers.NestedSimpleRouter(router, r'accounts', lookup='accounts')
+accounts_router.register(r'transactions', views.TransactionViewSet, basename='accounts-transactions')
+
 urlpatterns = [
     path(r'', include(router.urls)),
     path(r'', include(investments_router.urls)),
+    path(r'', include(accounts_router.urls)),
 ]
