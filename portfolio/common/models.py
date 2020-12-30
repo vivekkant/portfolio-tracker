@@ -21,7 +21,7 @@ class AccountType(models.TextChoices):
 	CASH = 'CASH', _('Cash')
 	ASSET = 'ASSET', _('Assets')
 	LIBLTY = 'LIBLTY', _('Liability')
-	IVNEST = 'IVNEST', _('Investment')
+	INVEST = 'INVEST', _('Investment')
 	_INTERNAL = '_INTERNAL', _('Internal Counter Party Accounts')
 
 class TransactionType(models.TextChoices):

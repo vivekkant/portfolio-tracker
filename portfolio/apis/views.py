@@ -47,7 +47,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 class TransactionViewSet(viewsets.ModelViewSet):
     """
-    This viewset automatically provides `list`, `create`, `retrieve`, update` and `destroy` actions.
+    This viewset provides `list`, `create`, `retrieve`, update` and `destroy` actions.
     """
 
     serializer_class = TransactionSerializer
@@ -67,10 +67,19 @@ class TransactionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request, accounts_pk=None):
-        return Response({'created': 'true'})
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+        return Response(serializer.data)
 
     def update(self, request, pk=None, accounts_pk=None):
-        return Response(request.data)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
 
     def destroy(self, request, pk=None, accounts_pk=None):
         return Response({'destroyed': 'true'})
