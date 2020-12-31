@@ -1,11 +1,16 @@
-from django.shortcuts import render, get_object_or_404
 from rest_framework.response import Response
 from rest_framework import viewsets
+from rest_framework import views
+from rest_framework import status
 from common.models import Portfolio
 from common.models import Investment
 from common.models import Account
 from common.models import InvestmentPrice
 from common.models import Transaction
+from common.models import AssetClass
+from common.models import SymbolType
+from common.models import AccountType
+from common.models import TransactionType
 from apis.serializers import PortfolioSerializer
 from apis.serializers import InvestmentSerializer
 from apis.serializers import InvestmentPriceSerializers
@@ -54,16 +59,19 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Transaction.objects.filter(account=self.kwargs['accounts_pk'])
+
         return queryset
 
     def list(self, request, accounts_pk=None):
-        queryset = Transaction.objects.filter(account=self.kwargs['accounts_pk'])
+        queryset = self.get_queryset()
         serializer = TransactionSerializer(queryset, many=True)
+
         return Response(serializer.data)
 
     def retrieve(self, request, accounts_pk=None, pk=None):
-        queryset = Transaction.objects.get(pk=pk)
-        serializer = TransactionSerializer(queryset)
+        instance = self.get_object()
+        serializer = TransactionSerializer(instance)
+
         return Response(serializer.data)
 
     def create(self, request, accounts_pk=None):
@@ -82,7 +90,29 @@ class TransactionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def destroy(self, request, pk=None, accounts_pk=None):
-        return Response({'destroyed': 'true'})
+        instance = self.get_object()
+        serializer = TransactionSerializer(instance)
+        serializer.delete_instance()
+
+        return Response(serializer.data)
+
+class MetaData(views.APIView):
+
+    def get(self, request, format=None):
+
+        metadata_classes = [AssetClass, SymbolType, AccountType, TransactionType]
+        metadata_dict = {}
+
+        for clazz in metadata_classes:
+            
+            clazz_dict = {}
+            
+            for name, member in clazz.__members__.items():
+                clazz_dict[member.value] = name
+            
+            metadata_dict[clazz.__name__] = clazz_dict
+
+        return Response(metadata_dict)
 
 
 

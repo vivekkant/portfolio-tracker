@@ -35,6 +35,8 @@ def validate_transaction(serializer, data):
 		
 		null_fields = ["investment", "price", "quantity", "fee"]
 		null_validator(data, null_fields)
+
+		data["debit"] = 0.0
 	
 	elif data["transaction_type"] == "EXPENSE":
 		account = data["account"]
@@ -56,6 +58,8 @@ def validate_transaction(serializer, data):
 		null_fields = ["investment", "price", "quantity", "fee"]
 		null_validator(data, null_fields)
 
+		data["credit"] = 0.0
+
 	elif data["transaction_type"] == "TRANSFER":
 		account = data["account"]
 		if (account.account_type == "_INTERNAL"):
@@ -68,13 +72,16 @@ def validate_transaction(serializer, data):
 		if account == counter_account:
 			raise serializers.ValidationError("Transfer transaction can not be to same account")
 
-		debit = data["debit"]
-		credit = data["credit"]
+		debit = data.get("debit", 0.0) if data.get("debit", 0.0) is not None else 0.0
+		credit = data.get("credit", 0.0) if data.get("credit", 0.0) is not None else 0.0
 		if (debit > 0 and credit > 0):
 			raise serializers.ValidationError("Trasfer transactions can either have debit or credit")
 		
 		null_fields = ["investment", "price", "quantity", "fee"]
 		null_validator(data, null_fields)
+
+		data["debit"] = debit
+		data["credit"] = credit
 
 	elif data["transaction_type"] == "BUY":
 		account = data["account"]

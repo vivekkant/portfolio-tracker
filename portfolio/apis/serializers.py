@@ -69,7 +69,11 @@ class TransactionSerializer(serializers.ModelSerializer):
         instance = self.update_instance(instance, validated_data)
         instance.save()
 
-        counter_instance = Transaction.objects.filter(account=instance.counter_account, transaction_id=instance.transaction_id)[0];
+        counter_queryset = Transaction.objects.filter(account=instance.counter_account, transaction_id=instance.transaction_id);
+        if (len(counter_queryset) != 1):
+            raise serializers.ValidationError("Invalid transaction state - cannot update")
+
+        counter_instance = counter_queryset[0]
         counter_validated_data = copy(validated_data)
         counter_validated_data["account"] = validated_data["counter_account"]
         counter_validated_data["counter_account"] = validated_data["account"]
@@ -97,6 +101,18 @@ class TransactionSerializer(serializers.ModelSerializer):
         instance.notes              = validated_data.get('notes', instance.notes)
 
         return instance
+
+
+    def delete_instance(self):
+
+        instance = self.instance
+        counter_queryset = Transaction.objects.filter(account=instance.counter_account, transaction_id=instance.transaction_id);
+        if (len(counter_queryset) != 1):
+            raise serializers.ValidationError("Invalid transaction state - cannot delete")
+        counter_instance = counter_queryset[0]
+
+        instance.delete()
+        counter_instance.delete()
 
 
 

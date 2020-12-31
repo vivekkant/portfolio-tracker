@@ -3,8 +3,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
 from apis import views
 
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r'portfolios', views.PortfolioViewSet)
 router.register(r'investments', views.InvestmentViewSet)
 router.register(r'accounts', views.AccountViewSet)
@@ -19,4 +18,5 @@ urlpatterns = [
     path(r'', include(router.urls)),
     path(r'', include(investments_router.urls)),
     path(r'', include(accounts_router.urls)),
+    path(r'metadata', views.MetaData().as_view()),
 ]
