@@ -1,4 +1,5 @@
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework import views
 from rest_framework import status
@@ -22,6 +23,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`, update` and `destroy` actions.
     """
+    permission_classes = [IsAuthenticated]
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioSerializer
 
@@ -29,24 +31,27 @@ class InvestmentViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`, update` and `destroy` actions.
     """
+    permission_classes = [IsAuthenticated]
     queryset = Investment.objects.all()
     serializer_class = InvestmentSerializer
 
 
 class InvestmentPriceViewSet(viewsets.ModelViewSet):
-	"""
-	This viewset automatically provides `list`, `create`, `retrieve`, update` and `destroy` actions.
-	"""
-	serializer_class = InvestmentPriceSerializers
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`, update` and `destroy` actions.
+    """
+    permission_classes = [IsAuthenticated]
+    serializer_class = InvestmentPriceSerializers
 
-	def get_queryset(self):
-		queryset = InvestmentPrice.objects.filter(investment=self.kwargs['investments_pk'])
-		return queryset
+    def get_queryset(self):
+        queryset = InvestmentPrice.objects.filter(investment=self.kwargs['investments_pk'])
+        return queryset
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`, update` and `destroy` actions.
     """
+    permission_classes = [IsAuthenticated]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
@@ -54,7 +59,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
     """
     This viewset provides `list`, `create`, `retrieve`, update` and `destroy` actions.
     """
-
+    permission_classes = [IsAuthenticated]
     serializer_class = TransactionSerializer
 
     def get_queryset(self):
@@ -97,6 +102,8 @@ class TransactionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class MetaData(views.APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
 

@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
+from rest_framework.authtoken.views import obtain_auth_token
 from apis import views
 
 router = DefaultRouter(trailing_slash=False)
@@ -19,4 +20,5 @@ urlpatterns = [
     path(r'', include(investments_router.urls)),
     path(r'', include(accounts_router.urls)),
     path(r'metadata', views.MetaData().as_view()),
+    path(r'authenticate', obtain_auth_token),
 ]

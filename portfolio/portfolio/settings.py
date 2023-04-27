@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'apis.apps.ApisConfig',
     'rest_framework',
+    'rest_framework.authtoken',
+    'ui.apps.UiConfig',
 ]
 
 MIDDLEWARE = [
@@ -105,6 +108,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# REST Framework Configs
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'apis.authentication.PortfolioTokenAuthentication',
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -124,3 +133,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# This is
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
